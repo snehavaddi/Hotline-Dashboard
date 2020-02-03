@@ -1,0 +1,192 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.1.0",
+		"id": "Hotline",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.1.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": {
+			"viewName": "Hotline.view.App",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "Hotline.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "Hotline.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": {
+					"target": "notFound"
+				}
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "appHome",
+					"target": "home"
+				},
+				{
+					"pattern": "admin",
+					"name": "admin",
+					"target": "admin"
+				},
+				{
+					"pattern": "update",
+					"name": "update",
+					"target": "update"
+				},
+				{
+					"pattern": "main",
+					"name": "main",
+					"target": "main"
+				},
+				{
+					"pattern": "main_DE",
+					"name": "main_DE",
+					"target": "main_DE"
+				},
+				{
+					"pattern": "main_CA",
+					"name": "main_CA",
+					"target": "main_CA"
+				},
+				{
+					"pattern": "in_assign",
+					"name": "in_assign",
+					"target": "in_assign"
+				},
+				{
+					"pattern": "de_assign",
+					"name": "de_assign",
+					"target": "de_assign"
+				},
+				{
+					"pattern": "ca_assign",
+					"name": "ca_assign",
+					"target": "ca_assign"
+				},
+				{
+					"pattern": "manage/{hotline}",
+					"name": "manage",
+					"target": "manage"
+				}
+			],
+			"targets": {
+				"home": {
+					"viewName": "Home",
+					"viewLevel": 1
+				},
+				"main": {
+					"viewName": "Main",
+					"transition": "slide"
+				},
+				"main_DE": {
+					"viewName": "Main_DE",
+					"transition": "slide"
+				},
+				"main_CA": {
+					"viewName": "Main_CA",
+					"transition": "slide"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"transition": "show"
+				},
+				"admin": {
+					"viewName": "Admin",
+					"transition": "slide"
+				},
+				"update": {
+					"viewName": "HotlineUpdate",
+					"transition": "slide"
+				},
+				"in_assign": {
+					"viewName": "IN_Assign",
+					"transition": "slide"
+				},
+				"de_assign": {
+					"viewName": "DE_Assign",
+					"transition": "slide"
+				},
+				"ca_assign": {
+					"viewName": "CA_Assign",
+					"transition": "slide"
+				},
+				"manage": {
+					"viewName": "Manage",
+					"transition": "slide"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/brlt/hotline_d",
+		"_version": "1.1.0"
+	},
+	"sap.platform.hcp": {
+		"uri": "",
+		"_version": "1.1.0"
+	}
+}
