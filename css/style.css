@@ -1,0 +1,102 @@
+/* Enter your custom styles here */
+
+.hmFragVBox {
+    padding: 20px !important;
+}
+
+.txtBold {
+    font-weight: bold !important;
+}
+
+.pageBg {
+    background-image: url('../images/bg2.jpg');
+    webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.__assign_tinput {
+    padding-top: 0px;
+}
+
+td#__item0_cell2,
+td#__item0_cell4 {
+    padding-top: 0px;
+}
+
+.currentWeekRow {
+    background-color: rgba(109, 202, 149, 0.81) !important;
+}
+
+.currentWeekRowDaily {
+    background-color: rgba(109, 202, 149, 0.81) !important;
+}
+
+.sapMTitleStyleAuto {
+    font-weight: bold !important;
+    font-size: x-large !important;
+}
+
+.legend {
+    font-weight: bold;
+}
+
+.pColor {
+    background-color: #696969;
+    padding: 0px 2px;
+}
+
+.rColor {
+    background-color: #FF8C00;
+    padding: 0px 2px;
+}
+
+.aColor {
+    background-color: blue;
+    padding: 0px 2px;
+}
+
+.mColor {
+    background-color: #FF00FF;
+    padding: 0px 2px;
+}
+
+.vGreen {
+    color: white;
+    margin-top: 5px;
+    font-size: small !important;
+}
+
+.hide {
+    pointer-events: none;
+}
+
+.assignGreen {
+    background-color: #66FF33;
+}
+
+.assignRed {
+    background-color: #FF3300;
+}
+
+.assignYellow {
+    background-color: #FFFF66;
+}
+
+.imageHelp {
+    margin: 10px;
+    padding: 10px;
+}
+
+.titleHelp {
+    margin: 5px 10px 0px 10px;
+}
+
+.vboxDialog {
+    padding: 0px 10px 0px 10px;
+}
+.infoText {
+	color: red !important;
+    font-style: italic !important;
+}
