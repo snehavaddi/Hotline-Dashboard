@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="Manage User">
+		<content>
+			<VBox width="100%" direction="Column" id="" justifyContent="SpaceBetween" class="hmFragVBox">
+				<items>
+					<Label text="Hotline Key" width="100%"  required="true"/>
+					<Input width="100%"  maxLength="10" enabled="false" editable="false" value="{info>/hotline}"/>
+					<Label text="Year" width="100%"  required="true"/>
+					<Input width="100%"  maxLength="10" enabled="false" editable="false" value="{info>/year}"/>
+					<Label text="User Name" width="100%"  required="true"/>
+					<Input width="100%" valueHelpOnly="true" showSuggestion="true" valueHelpRequest="handleDeValueHelp" value="{info>/fullname}" showValueHelp="true"/>
+					<Label text="FTE (0.00001 to 1.00000)" width="100%"  required="true" />
+					<StepInput min="0" max="1" value="{info>/fte}" displayValuePrecision="4" step="0.1"/>
+				</items>
+			</VBox>
+		</content>
+		<buttons>
+			<Button id="updBtn" text="Modify" type="Accept" press="updateEntry" visible="{= ${info>/edit} }" width="100px"/>
+			<Button id="savBtn" text="Add" type="Accept" press="createEntry" visible="{= !${info>/edit} }" width="100px"/>
+			<Button id="delBtn" text="Delete" type="Reject" press="deleteEntry" visible="{= ${info>/edit} }" width="100px"/>
+			<Button id="closeBtn" text="Close" type="Reject" press="closeDialog" width="100px"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

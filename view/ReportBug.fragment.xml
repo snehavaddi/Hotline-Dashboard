@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Report a Bug" stretch="{= ${device>/system/phone} }">
+		<content>
+			<VBox>
+				<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+					adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+					singleContainerFullSize="false">
+					<f:content>
+						<Label text="Component"/>
+						<Select selectedKey="{bug>/Component}" items="{ path: 'comp>/results', sorter: { path: 'Text' } }" forceSelection="true">
+							<core:Item key="{comp>ComponentId}" text="{comp>Text}"/>
+						</Select>
+						<Label text="Priority"/>
+						<Select selectedKey="{bug>/Priority}">
+							<core:Item key="4" text="Low"/>
+							<core:Item key="3" text="Medium"/>
+							<core:Item key="2" text="High"/>
+							<core:Item key="1" text="Very High"/>
+						</Select>
+						<Label text="Issue Type"/>
+						<Select selectedKey="{bug>/IssueType}">
+							<core:Item key="1" text="Bug"/>
+							<core:Item key="10100" text="Feature Request"/>
+						</Select>
+						<Label text="Summary"/>
+						<Input maxLength="50" placeholder="Enter Summary Here (max 50 chars)" value="{bug>/Summary}"/>
+						<Label text="Description"/>
+						<TextArea rows="5" maxLength="255" value="{bug>/Description}" placeholder="Enter Description Here (max 255 chars)"/>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+		</content>
+		<buttons>
+			<Button text="Submit" type="Accept" press="submitBug"/>
+			<Button text="Close" type="Reject" press="closeBug"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

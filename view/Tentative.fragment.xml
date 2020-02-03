@@ -1,0 +1,23 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id = "__userLists"
+		noDataText="No Users Found"
+		title="Select User"
+		contentHeight="auto"
+		search="handleSearch"
+		liveChange="handleSearch"
+		confirm="handleClose"
+		cancel="handleClose"
+		items="{
+			path: 'users>/results'
+		}" >
+		<StandardListItem
+			title="{users>Name}"
+			description="{users>Id}"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

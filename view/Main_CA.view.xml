@@ -1,0 +1,31 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"  class="sapUiSizeCompact" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="Hotline.controller.Main_CA">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" showFooter="true" navButtonPress="onNavBack" showNavButton="true">
+				<content>
+					<HBox>
+						<List id="hCaList" width="250px" class="dragList" headerText="List of Hotlines" items="{/results}" visible="false">
+							<items>
+								<StandardListItem title="{HotlineTxt}"/>
+							</items>
+						</List>
+						<Table id="caTable" inset="false" width="100%" class="table" mode="None" >
+							<items></items>
+						</Table>
+					</HBox>
+				</content>
+				<footer>
+					<Bar>
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentRight>
+							<Button id="saveBtnM" text="Save" type="Accept" width="200px" press="saveAll"></Button>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

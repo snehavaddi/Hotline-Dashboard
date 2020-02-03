@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog type="Message" title="Confirm" afterClose="destroyDialog">
+		<buttons>
+			<Button text="Finalize" type="Accept" visible="{path : 'finalDialog>/Status', formatter : '.formatter.Finalize'}"/>
+			<Button text="Assign Now" type="Accept" visible="{path : 'finalDialog>/Status', formatter : '.formatter.FinalizeAssign'}" press="navToAssignV"/>
+			<Button text="Close" type="Reject" press="closeFinalDialog"/>
+		</buttons>
+		<content>
+			<sap.ui.layout.form:SimpleForm editable="true" layout="ResponsiveGridLayout" xmlns:sap.ui.layout.form="sap.ui.layout.form">
+				<sap.ui.layout.form:content>
+					<core:Title text="Finalize Assigments"/>
+					<Label text="Hotline"/>
+					<Select forceSelection="false" change="onChangeFinalHotline" items="{path : 'final>/results'}" id="__dialogSelect">
+						<core:ListItem text="{final>HotlineTxt}" key="{final>HotlineNum}||{final>Frequency}"/>
+					</Select>
+					<Label text="Calendar Weeks"/>
+					<Input width="100%" editable="false" value="{finalDialog>/Cw_from} - {finalDialog>/Cw_to}"/>
+					<Label text="Year"/>
+					<Input width="100%" editable="false" value="{finalDialog>/Year}"/>
+					<Label text="Assignment Status"/>
+					<Input width="100%" editable="false" value="{finalDialog>/Status}"/></sap.ui.layout.form:content>
+			</sap.ui.layout.form:SimpleForm>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,314 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" class="sapUiSizeCompact" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="Hotline.controller.Home">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" class="pageBg">
+				<content>
+					<Toolbar width="100%" id="__toolbar1" design="Info">
+						<content>
+							<Text text="Quarterly Hotliners" maxLines="0" id="__text9"/>
+						</content>
+						<ToolbarSpacer/>
+						<!--<Button text="Copy Assignments" press="onPressCopyAssignments"/>-->
+						<Text text="Enable Mail Blockers"/>
+						<Switch change="changeFlag" state="{mail>/FLAG}"/>
+						<Button type="Emphasized" class="btn" text="Report a Bug/FR" width="auto" press="openReportBug"/>
+					</Toolbar>
+					<IconTabBar id="__mainTab" backgroundDesign="Translucent" upperCase="true" select="onSelectTab" selectedKey="{selTab>/selectedKey}"/>
+					<l:Grid defaultSpan="L4 M6 S6" class="sapUiSmallMarginTop" visible="{= ${selTab>/selectedKey} === 'today'}">
+						<l:content>
+							<VBox class="mainBox">
+								<Bar class="headerBox" design="Header">
+									<contentMiddle>
+										<Button icon="{imageModel>/path}/images/india.png" type="Transparent"></Button>
+									</contentMiddle>
+								</Bar>
+								<Table backgroundDesign="Translucent" noDataText="No Hotlines assigned for today"
+									items="{ path: 'IN>/', sorter: { path: 'Hotlinename', group : true } }">
+									<columns>
+										<Column></Column>
+										<Column></Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Active">
+											<cells>
+												<ObjectIdentifier title="{IN>InPrimary}"/>
+												<ObjectIdentifier title="{IN>InBackup}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</VBox>
+							<VBox class="mainBox">
+								<Bar class="headerBox" design="Header">
+									<contentMiddle>
+										<Button icon="{imageModel>/path}/images/germany.png" type="Transparent"></Button>
+									</contentMiddle>
+								</Bar>
+								<Table backgroundDesign="Translucent" noDataText="No Hotlines assigned for today"
+									items="{ path: 'DE>/', sorter: { path: 'Hotlinename', group : true } }">
+									<columns>
+										<Column ></Column>
+										<Column ></Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Active">
+											<cells>
+												<ObjectIdentifier title="{DE>DePrimary}"/>
+												<ObjectIdentifier title="{DE>DeBackup}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</VBox>
+							<VBox class="mainBox">
+								<Bar class="headerBox" design="Header">
+									<contentMiddle>
+										<Button icon="{imageModel>/path}/images/canada.png" type="Transparent"></Button>
+									</contentMiddle>
+								</Bar>
+								<Table backgroundDesign="Translucent" noDataText="No Hotlines assigned for today"
+									items="{ path: 'CA>/', sorter: { path: 'Hotlinename', group : true } }">
+									<columns>
+										<Column ></Column>
+										<Column ></Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Active">
+											<cells>
+												<ObjectIdentifier title="{CA>CaPrimary}"/>
+												<ObjectIdentifier title="{CA>CaBackup}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</VBox>
+						</l:content>
+					</l:Grid>
+					<Bar id="__bar1" visible="{= ${selTab>/selectedKey} !== 'today' &amp;&amp; ${selTab>/selectedKey} !== 'HFC||1'}">
+						<contentLeft/>
+						<contentRight>
+							<Text text="Quarter" maxLines="0" id="__text7" visible="{= ${tableType>/table} !== 'M'}"/>
+							<Select width="100px" id="__input0" selectedKey="{head>/0/Quarter}" visible="{= ${tableType>/table} !== 'M'}">
+								<core:Item key="01" text="01"/>
+								<core:Item key="02" text="02"/>
+								<core:Item key="03" text="03"/>
+								<core:Item key="04" text="04"/>
+							</Select>
+							<Text text="Month" visible="{= ${tableType>/table} === 'M'}"/>
+							<Select width="120px" selectedKey="{head>/0/Month}" visible="{= ${tableType>/table} === 'M'}">
+								<core:Item key="01" text="January"/>
+								<core:Item key="02" text="February"/>
+								<core:Item key="03" text="March"/>
+								<core:Item key="04" text="April"/>
+								<core:Item key="05" text="May"/>
+								<core:Item key="06" text="June"/>
+								<core:Item key="07" text="July"/>
+								<core:Item key="08" text="August"/>
+								<core:Item key="09" text="September"/>
+								<core:Item key="10" text="October"/>
+								<core:Item key="11" text="November"/>
+								<core:Item key="12" text="December"/>
+							</Select>
+							<Text text="of Year" maxLines="0" id="__text8"/>
+							<StepInput min="2017" max="2020" step="1" value="{head>/0/Year}" width="auto"/>
+							<Button text="Fetch" id="__button2" icon="sap-icon://arrow-right" type="Emphasized" iconFirst="false" press="refreshAssignments"/>
+						</contentRight>
+						<contentMiddle/>
+					</Bar>
+					<Table id="myViewTable" noDataText="You do not have any hotlines assigned to you." items="{my>/results}">
+						<items>
+							<ColumnListItem counter="0" id="__iM0" type="Inactive">
+								<cells>
+									<Text class="txtBold" text="{my>Hotline}" id="__m1"/>
+									<Text class="txtBold" text="CW {my>CW} of {my>CY}" id="__m2"/>
+									<Text class="txtBold"
+										text="{path : 'my>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd YYYY' ,source :'yyyymmdd'}}" id="__m3"/>
+									<Text class="txtBold"
+										text="{path : 'my>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd YYYY' ,source :'yyyymmdd'}}" id="__m4"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column width="auto">
+								<header>
+									<Label text="Hotline Name"/>
+								</header>
+							</Column>
+							<Column width="auto" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Calendar Week"/>
+								</header>
+							</Column>
+							<Column width="auto" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="From Date"/>
+								</header>
+							</Column>
+							<Column width="auto" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="To Date"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<Table noDataText="No assignments found for the selected Quarter" id="__dailyView" items="{daily>/results}"
+						updateFinished="changeColorsDaily" visible="false" itemPress="onDailyPress">
+						<items>
+							<ColumnListItem type="Navigation">
+								<cells>
+									<Text text="{daily>CalendarWeek}" class="txtBold"/>
+									<Text class="txtBold"
+										text="{path : 'daily>Date',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'EEE MMM dd,yy' ,source :'yyyymmdd'}}"/>
+									<Text text="{daily>PrimaryName}" id="__id1"/>
+									<Text text="{daily>BackupName}" id="__id4"/>
+									<Text text="{daily>PrimaryName_DE}" id="__id2"/>
+									<Text text="{daily>BackupName_DE}" id="__id5"/>
+									<Text text="{daily>PrimaryName_CA}" id="__id3"/>
+									<Text text="{daily>BackupName_CA}" id="__id6"/>
+									<Button type="Default" press="editDailyComment" text="{daily>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments "/>
+									<Text text="{daily>Edit}" visible="false"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column mergeDuplicates="true" width="60px">
+								<header>
+									<Label text="CW"/>
+								</header>
+							</Column>
+							<Column width="auto" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Date"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet" visible="{= ${cpar>/show} }">
+								<header>
+									<Label text="Primary Hotliner (IN)"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet" visible="{= ${cpar>/show} }">
+								<header>
+									<Label text="Backup Hotliner (IN)"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Primary Hotliner (DE)"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Backup Hotliner (DE)"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet" visible="{= ${cpar>/show} }">
+								<header>
+									<Label text="Primary Hotliner (CA)"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet" visible="{= ${cpar>/show} }">
+								<header>
+									<Label text="Backup Hotliner (CA)"/>
+								</header>
+							</Column>
+							<Column width="50px">
+								<header>
+									<Label text="Comment"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<Table noDataText="No assignments found for the selected Quarter" id="__table0"
+						items="{ path : 'tab>/results' , sorter : { path : 'CalendarWeek'}}" class="homeTable" itemPress="onItemPress" updateFinished="changeColors">
+						<items>
+							<ColumnListItem counter="0" id="__item0" type="Navigation">
+								<cells>
+									<Text class="txtBold" text="CW {tab>CalendarWeek} / {tab>CalYear}" id="__text0"/>
+									<Text class="txtBold" text="{path : 'tab>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"
+										id="__text1"/>
+									<Text class="txtBold" text="{path : 'tab>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"
+										id="__text2"/>
+									<Text text="{tab>PrimaryName} " id="__text3"/>
+									<Text text="{tab>BackupName} " id="__text4"/>
+									<Text text="{tab>PrimaryName_DE} " id="__text3_de"/>
+									<Text text="{tab>BackupName_DE} " id="__text4_de"/>
+									<Button text="{tab>Comment}" type="Emphasized" icon="sap-icon://comment" press="showComment"
+										tooltip="Show/Edit Comment CW {tab>CalendarWeek} / {tab>CalYear}"/>
+									<Text text="{tab>Edit}" visible="false"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column id="__column0" width="auto">
+								<header>
+									<Label text="Calendar Week" id="__label0"/>
+								</header>
+							</Column>
+							<Column id="__column1" demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="From" id="__label1"/>
+								</header>
+							</Column>
+							<Column id="__column2" demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="To" id="__label2"/>
+								</header>
+							</Column>
+							<Column id="__column3" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Primary IN" id="__label3"/>
+								</header>
+							</Column>
+							<Column id="__column4" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Backup IN" id="__label4"/>
+								</header>
+							</Column>
+							<Column id="__column3_de" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Primary DE" id="__label3_de"/>
+								</header>
+							</Column>
+							<Column id="__column4_de" demandPopin="true" minScreenWidth="Tablet">
+								<header>
+									<Label text="Backup DE" id="__label4_de"/>
+								</header>
+							</Column>
+							<Column class="btnClass" width="auto">
+								<header>
+									<Label text="Comment(s)"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<VBox visible="{= ${selTab>/selectedKey} === 'HFC||1'}">
+						<mvc:XMLView viewName="Hotline.view.HFC"/>
+					</VBox>
+				</content>
+				<footer>
+					<OverflowToolbar>
+						<Button text="Maintain Hotlines Master Data" width="auto" type="Emphasized" icon="sap-icon://settings" press="onOpenDialog" id="_home0"
+							visible="false"/>
+						<Button id="_home2" press="navToAdmin" text="Send Preference Mail" width="auto" icon="sap-icon://email" type="Emphasized" visible="false"/>
+						<Button text="Share hotline assignments" id="_home3" icon="sap-icon://message-success" press="sendFinalAssign" type="Emphasized"
+							visible="false"/>
+						<ToolbarSpacer></ToolbarSpacer>
+						<Button width="auto" id="_home1" text="Manage Assignments" icon="sap-icon://employee-approvals" press="navToAssign" type="Accept"
+							visible="false"/>
+						<ToolbarSpacer></ToolbarSpacer>
+						<Button text="Enter Preferences" width="auto" id="_home5" icon="sap-icon://forward" press="navToMain"
+							visible="{= ${selTab>/selectedKey} !== 'HFC||1'}">
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</Button>
+					</OverflowToolbar>
+				</footer>
+				<headerContent>
+					<Text text="Welcome {head>/0/UserName} ({head>/0/UserId})" maxLines="0" id="__text5"/>
+					<Button icon="{status>/ICON}" type="{status>/STATUS}" text="{status>/SYSTEM}" class="sapUiSizeCompact"/>
+					<Button icon="sap-icon://sys-help" type="Transparent" press="showHelp" tooltip="Help"/>
+				</headerContent>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="Edit Pair">
+		<content>
+			<VBox width="100%" direction="Column" justifyContent="SpaceBetween" class="hmFragVBox">
+				<items>
+					<Label text="Quarter" labelFor="__hQtr"/>
+					<Label text="Hotline Key" width="100%" required="true" labelFor="__hName"/>
+					<Select items="{hl>/results}" forceSelection="true" width="100%" id="__hName">
+						<core:Item key="{hl>HotlineNum}" text="{hl>HotlineTxt}"/>
+					</Select>
+					<Input id="__seqno" visible="false"/>
+					<Label text="Hotliner #1" width="100%" required="true" labelFor="__p1Name"/>
+					<Input width="100%" id="__p1Name" showSuggestion="true" showValueHelp="true" valueHelpRequest="handleValuePair" valueHelpOnly="true"/>
+					<Input id="__p1ID" visible="false"/>
+					<Label text="Hotliner #2" width="100%" required="true" labelFor="__p2Name"/>
+					<Input width="100%" id="__p2Name" showSuggestion="true" showValueHelp="true" valueHelpRequest="handleValuePair" valueHelpOnly="true"/>
+					<Input id="__p2ID" visible="false"/>
+				</items>
+				<Bar design="Footer">
+					<contentRight>
+						<Button id="pUpdate" text="Modify" type="Accept" press="updatePair"/>
+						<Button id="pDelete" text="Delete" type="Reject" press="deletePair"/>
+						<Button id="pSave" text="Save" type="Accept" press="createPair"/>
+						<Button id="pClose" text="Close" type="Reject" press="closeDialogPair"/>
+					</contentRight>
+				</Bar>
+			</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

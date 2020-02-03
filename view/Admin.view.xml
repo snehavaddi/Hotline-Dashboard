@@ -1,0 +1,113 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:suite="sap.suite.ui.commons" controllerName="Hotline.controller.Admin">
+	<App>
+		<pages>
+			<Page title="{i18n>title_admin}" showNavButton="true" navButtonPress="onNavBack" class="">
+				<footer>
+					<Bar id="__bar0">
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentMiddle></contentMiddle>
+						<contentRight>
+							<Button text="Share hotline assignments" icon="sap-icon://message-success" id="__admin2" press="sendFinalAssign"/>
+						</contentRight>
+					</Bar>
+				</footer>
+				<content>
+					<form:SimpleForm id="manageForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" title="Set Dates"
+						labelSpanL="4" labelSpanM="4" emptySpanL="0" emptySpanM="0" columnsL="1" columnsM="2" class="editableForm">
+						<form:content>
+							<core:Title text="Preference"/>
+							<Label text="Quarter" design="Bold" required="true"/>
+							<Select id="__selQtr" selectedKey="{mgr>/Quarter}" forceSelection="true" change="getWeeks">
+								<core:Item key="1" text="01 Jan - Mar"/>
+								<core:Item key="2" text="02 Apr - Jun"/>
+								<core:Item key="3" text="03 Jul - Sep"/>
+								<core:Item key="4" text="04 Oct - Dec"/>
+								<layoutData>
+									<l:GridData span="L2 M6 S12"/>
+								</layoutData>
+							</Select>
+							<StepInput min="2017" max="2020" step="1" value="{mgr>/Cal_Year}" width="auto" change="getWeeks" id="__year"/>
+							<!--<Input value="{mgr>/Cal_Year}" type="Number" maxLength="4" placeholder="Enter Year" width="100px" change="getWeeks" id="__year"/>-->
+							<Label design="Bold" text="Calendar Week (From)" labelFor="__fromDate" required="true"/>
+							<DatePicker value="{path : 'mgr>/FromDate'}" id="__fromDate" valueFormat="yyyyMMdd" editable="true" displayFormat="'CW' w"
+								placeholder="Calendar Week" change="calculateWeeks" enabled="false">
+								<layoutData>
+									<l:GridData span="L2 M6 S12"/>
+								</layoutData>
+							</DatePicker>
+							<Text text="Week Starting From " id="__extraFrom"/>
+							<Label text="Calendar Week (To)" design="Bold" labelFor="__toDate" required="true"/>
+							<DatePicker value="{mgr>/ToDate}" id="__toDate" valueFormat="yyyyMMdd" editable="true" placeholder="Calendar Week" displayFormat="'CW' w"
+								change="calculateWeeks" enabled="false">
+								<layoutData>
+									<l:GridData span="L2 M6 S12"/>
+								</layoutData>
+							</DatePicker>
+							<Text text="Week Starting From " id="__extraTo"/>
+							<Label text="Total Calendar Weeks"></Label>
+							<Text id="__totalCW" text=""></Text>
+							<Label text="Deadline Date" design="Bold" labelFor="__deadlineDate" required="true"/>
+							<DatePicker value="{mgr>/DeadlineDate}" id="__deadlineDate" valueFormat="yyyyMMdd">
+								<layoutData>
+									<l:GridData span="L2 M6 S12"/>
+								</layoutData>
+							</DatePicker>
+							<Label text="Reminder Date" design="Bold" labelFor="__remDate" required="true"/>
+							<DatePicker value="{mgr>/ReminderDate}" id="__remDate" valueFormat="yyyyMMdd">
+								<layoutData>
+									<l:GridData span="L2 M6 S12"/>
+								</layoutData>
+							</DatePicker>
+							<core:Title text="Actions"/>
+							<Button text="Update Only" width="auto" type="Emphasized" icon="sap-icon://upload" press="update">
+								<layoutData>
+									<l:GridData span="L2 M3 S6"/>
+								</layoutData>
+							</Button>
+							<Button text="Send Preference Mail" width="auto" type="Emphasized" icon="sap-icon://notification-2" press="updateNotify">
+								<layoutData>
+									<l:GridData span="L2 M3 S6"/>
+								</layoutData>
+							</Button>
+							<Button text="Send Reminder" width="auto" type="Emphasized" icon="sap-icon://alert" press="sendReminders">
+								<layoutData>
+									<l:GridData span="L2 M3 S6"/>
+								</layoutData>
+							</Button>
+							<!--<Button text="Maintain Hotlines Master Data" width="auto" type="Emphasized" icon="sap-icon://settings" press="onOpenDialog">-->
+							<!--	<layoutData>-->
+							<!--		<l:GridData span="L3 M3 S6"/>-->
+							<!--	</layoutData>-->
+							<!--</Button>-->
+						</form:content>
+					</form:SimpleForm>
+					<html:br/>
+					<html:h3 style="margin-left:10px; display: block;font-weight:normal">Order of Dates</html:h3>
+					<html:hr></html:hr>
+					<suite:ProcessFlow id="processflow1" scrollable="true" nodeTitlePress="onNodeTitlePress" backgroundDesign="transparent"
+						wheelZoomable="false">
+						<suite:nodes>
+							<suite:ProcessFlowNode laneId="0" nodeId="1" title="Reminder Date" titleAbbreviation="Rem Date" isTitleClickable="false" children="2"
+								state="Positive" highlighted="true" focused="false" texts="2 weeks before opening CW"/>
+							<suite:ProcessFlowNode laneId="1" nodeId="2" title="Deadline Date" titleAbbreviation="Node 2" isTitleClickable="false" children="3"
+								state="Critical" texts="1 Week before opening CW" highlighted="true" focused="false"/>
+							<suite:ProcessFlowNode laneId="2" nodeId="3" title="Opening CW" titleAbbreviation="Rem Date" isTitleClickable="false" children="4"
+								state="Positive" highlighted="true" focused="false" texts="Select Opening Calendar Week"/>
+							<suite:ProcessFlowNode laneId="3" nodeId="4" title="Ending CW" titleAbbreviation="Node 2" isTitleClickable="false" state="Negative"
+								texts="Select Ending Calendar Week" highlighted="true" focused="false"/>
+						</suite:nodes>
+						<suite:lanes>
+							<suite:ProcessFlowLaneHeader laneId="0" iconSrc="sap-icon://message-warning" text="Reminder Date" position="0" state=""/>
+							<suite:ProcessFlowLaneHeader laneId="1" iconSrc="sap-icon://locked" text="Deadline Date" position="1"/>
+							<suite:ProcessFlowLaneHeader laneId="2" iconSrc="sap-icon://appointment" text="Calendar Week (From)" position="2"/>
+							<suite:ProcessFlowLaneHeader laneId="3" iconSrc="sap-icon://appointment" text="Calenadar Week (To)" position="3"/>
+						</suite:lanes>
+					</suite:ProcessFlow>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

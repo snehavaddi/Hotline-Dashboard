@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog title="Update Assignment">
+		<content>
+			<VBox width="100%" direction="Column" justifyContent="SpaceBetween" class="hmFragVBox">
+				<items>
+					<Label text="Calendar Week" width="100%" id="__h00"/>
+					<Input width="100%" id="__hi00" editable="false"/>
+					<Label text="From Date" width="100%" id="__h01"/>
+					<DatePicker id="__hi01" valueFormat="yyyyMMdd" editable="false"/>
+					<Label text="To Date" width="100%" id="__h02"/>
+					<DatePicker id="__hi02" valueFormat="yyyyMMdd" editable="false"/>
+					<!--india primary-->
+					<Label text="Primary (IND)" width="100%" id="__h03" visible="{= ${cpar>/show} }"/>
+					<Input visible="{= ${cpar>/show} }" width="100%" id="__hi03" showSuggestion="true" showValueHelp="true" valueHelpRequest="handleValueHelp"
+						valueHelpOnly="false"/>
+					<Input id="__inP1" visible="false"/>
+					<!--india backup-->
+					<Label text="Backup (IND)" width="100%" id="__h04" visible="{= ${cpar>/show} }"/>
+					<Input visible="{= ${cpar>/show} }" width="100%" id="__hi04" showSuggestion="true" showValueHelp="true"
+						valueHelpRequest="backupHandleValueHelp" valueHelpOnly="false"/>
+					<Input id="__inP2" visible="false"/>
+					<!--<Germany-->
+					<Label text="Primary (GER)" width="100%" id="__h03_de"/>
+					<Input width="100%" id="__hi03_de" showSuggestion="true" showValueHelp="true" valueHelpRequest="handleDeValueHelp" valueHelpOnly="false"/>
+					<Input id="__deP1" visible="false"/>
+					<!--germany backup-->
+					<Label text="Backup (GER)" width="100%" id="__h04_de"/>
+					<Input width="100%" id="__hi04_de" showSuggestion="true" showValueHelp="true" valueHelpRequest="backupHandleDeValueHelp"
+						valueHelpOnly="false"/>
+					<Input id="__deP2" visible="false"/>
+					<!--Canada-->
+					<Label text="Primary (CAN)" width="100%" id="__h03_ca" visible="false" />
+					<Input  width="100%" id="__hi03_ca" showSuggestion="true" showValueHelp="true"
+						valueHelpRequest="handleCaValueHelp" valueHelpOnly="false"/>
+					<Input id="__caP1" visible="false"/>
+					<!--Canada backup-->
+					<Label text="Backup (CAN)" width="100%" id="__h04_ca" visible="false" />
+					<Input  width="100%" id="__hi04_ca" showSuggestion="true" showValueHelp="true"
+						valueHelpRequest="backupHandleCaValueHelp" valueHelpOnly="false"/>
+					<Input id="__caP2" visible="false"/>
+				</items>
+				<Bar design="Footer">
+					<contentRight>
+						<Button id="saveBtn2" text="Save" type="Accept" press="updateEntry" visible="false"/>
+						<Button id="saveBtn" text="Save" type="Accept" press="createEntry"/>
+						<Button id="clsBtn" text="Close" type="Reject" press="closeDialog"/>
+					</contentRight>
+				</Bar>
+			</VBox>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

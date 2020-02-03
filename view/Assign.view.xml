@@ -1,0 +1,215 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" class="sapUiSizeCompact" xmlns:form="sap.ui.layout.form" controllerName="Hotline.controller.Assign">
+	<App>
+		<pages>
+			<Page title="{i18n>title_admin}" showNavButton="true" navButtonPress="onNavBack" class="">
+				<footer>
+					<Bar id="__bar0">
+						<contentMiddle></contentMiddle>
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentRight>
+							<Button text="SAVE and inform Admin" width="auto" icon="sap-icon://locked" press="saveAndInform" id="__aBtn1"/>
+							<Button text="Save All" icon="sap-icon://save" type="Accept" press="saveAll" id="__aBtn2"/>
+						</contentRight>
+					</Bar>
+				</footer>
+				<content>
+					<MessageStrip id="__msgStrip" visible="false" showCloseButton="false" type="Warning" showIcon="true"/>
+					<IconTabBar id="__mainTab" backgroundDesign="Translucent" upperCase="true" select="onSelectTab"/>
+					<Bar>
+						<contentLeft></contentLeft>
+						<contentRight>
+							<Text text="Quarter" maxLines="0"/>
+							<Select width="100px" id="_aQtr" selectedKey="{head>/0/Quarter}" change="onChangeQuarter">
+								<core:Item key="01" text="01"/>
+								<core:Item key="02" text="02"/>
+								<core:Item key="03" text="03"/>
+								<core:Item key="04" text="04"/>
+							</Select>
+							<Text text="of Year" maxLines="0"/>
+							<Input width="80px" id="_aYear" value="{head>/0/Year}"/>
+							<Button text="Get" icon="sap-icon://arrow-right" type="Emphasized" iconFirst="false" press="refreshAssignments"/>
+						</contentRight>
+						<contentMiddle/>
+					</Bar>
+					<Table noDataText="Contact Administrator" id="__dailyTable" items="{daily>/results}" updateFinished="changeColorsDaily" visible="false">
+						<items>
+							<ColumnListItem>
+								<Text text="{daily>CW}"></Text>
+								<Text class="txtBold"
+									text="{path : 'daily>Date',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'EEEE MMM dd,yyyy' ,source :'yyyymmdd'}}"/>
+								<HBox>
+									<Input value="{daily>PrimaryUserName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleValueHelp" valueHelpOnly="true" id="__i1"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>BackupUserName}" class="hidePointer" maxLines="0" showValueHelp="true" valueHelpRequest="backupHandleValueHelp"
+										valueHelpOnly="true" id="__i4"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>PrimaryUser_DEName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleDeValueHelp" valueHelpOnly="true" id="__i2"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>BackupUser_DEName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="backupHandleDeValueHelp" valueHelpOnly="true" id="__i5"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>PrimaryUser_CAName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleCaValueHelp" valueHelpOnly="true" id="__i3"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>BackupUser_CAName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="backupHandleCaValueHelp" valueHelpOnly="true" id="__i6"/>
+									<Button type="Transparent" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+								</HBox>
+								<Button type="Default" press="editDailyComment" text="{daily>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments "/>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column mergeDuplicates="true" width="30px">
+								<header>
+									<Label text="CW"/>
+								</header>
+							</Column>
+							<Column width="100px">
+								<header>
+									<Label text="Date"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Primary Hotliner (IN)"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Backup Hotliner (IN)"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Primary Hotliner (DE)"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Backup Hotliner (DE)"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Primary Hotliner (CA)"/>
+								</header>
+							</Column>
+							<Column >
+								<header>
+									<Label text="Backup Hotliner (CA)"/>
+								</header>
+							</Column>
+							<Column width="80px">
+								<header>
+									<Label text="Comment"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<Table noDataText="Contact Administrator" id="__table0" items="{tab>/results}" updateFinished="changeColors" visible="false">
+						<items>
+							<ColumnListItem >
+								<cells>
+									<Text class="txtBold" text="{tab>CW}" maxLines="0" id="__text0"/>
+									<Text class="txtBold"
+										text="{path : 'tab>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd,yyyy' ,source :'yyyymmdd'}}" id="__text1"/>
+									<Text class="txtBold"
+										text="{path : 'tab>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd,yyyy' ,source :'yyyymmdd'}}" id="__text1ex"/>
+									<Input value="{tab>PrimaryUserName}" class="hidePointer" maxLines="0" id="__text2" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleValueHelp" valueHelpOnly="false"/>
+									<Input value="{tab>BackupUserName}" class="hidePointer" maxLines="0" id="__text4" showValueHelp="true"
+										valueHelpRequest="backupHandleValueHelp" valueHelpOnly="false"/>
+									<Input value="{tab>PrimaryUser_DEName}" class="hidePointer" maxLines="0" id="__text3" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleDeValueHelp" valueHelpOnly="false"/>
+									<Input value="{tab>BackupUser_DEName}" class="hidePointer" maxLines="0" id="__text5" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="backupHandleDeValueHelp" valueHelpOnly="false"/>
+									<Button type="Default" press="editComment" text="{tab>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments CW{tab>CW}"/>
+									<Button type="Default" press="showTentative" text="" icon="sap-icon://account" tooltip="View/Select Tentative Users of CW{tab>CW}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column id="__column0" width="100px">
+								<header>
+									<Label text="Calendar Week" id="__label0"/>
+								</header>
+							</Column>
+							<Column id="__column1" width="100px">
+								<header>
+									<Label text="Date (From)" id="__label1"/>
+								</header>
+							</Column>
+							<Column id="__column1ex" width="100px">
+								<header>
+									<Label text="Date (To)" id="__label1ex"/>
+								</header>
+							</Column>
+							<Column id="__column2">
+								<header>
+									<Label text="Primary Hotliner (IN)" id="__label2"/>
+								</header>
+							</Column>
+							<Column id="__column3">
+								<header>
+									<Label text="Backup Hotliner (IN)" id="__label3"/>
+								</header>
+							</Column>
+							<Column id="__column2_text">
+								<header>
+									<Label text="Primary Hotliner (DE)" id="__label2_t"/>
+								</header>
+							</Column>
+							<Column id="__column3_text">
+								<header>
+									<Label text="Backup Hotliner (DE)" id="__label3_t"/>
+								</header>
+							</Column>
+							<Column id="__commentLabel" width="80px">
+								<header>
+									<Label text="Comment" id="__comntLabel"/>
+								</header>
+							</Column>
+							<!--Mod 01-->
+							<Column id="__tentativeCol" width="80px">
+								<header>
+									<Label text="Tentative(s)" id="__tentativeLabel"/>
+								</header>
+							</Column>
+							<!--end Mod 01-->
+						</columns>
+					</Table>
+					<Bar>
+						<contentLeft>
+							<Text text="Legend :"></Text>
+							<l:HorizontalLayout class="pColor" width="25px">
+								<Text text="User Preferences" class="vGreen" width="120px" textAlign="Center"/>
+							</l:HorizontalLayout>
+							<l:HorizontalLayout class="aColor" width="25px">
+								<Text text="Pair" class="vGreen" width="120px" textAlign="Center"/>
+							</l:HorizontalLayout>
+							<l:HorizontalLayout class="rColor" width="25px">
+								<Text text="System Generated" class="vGreen" width="120px" textAlign="Center"/>
+							</l:HorizontalLayout>
+							<Text text="Please note: Colors will go away when saved"/>
+						</contentLeft>
+					</Bar>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog title="Help" icon="sap-icon://sys-help" afterClose="destroyHomeHelp" >
+	<content>
+		<VBox>
+			<Image src="{imageModel>/path}/images/home.PNG" width="auto" class="imageHelp"/>
+			<html:hr></html:hr>
+			<Title text="Enable Mail Blockers" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+			<TextArea rows="5" editable="false" value="When this feature is enabled, the user will get a mail appointment directly to their Outlook. The system will send blockers on each Friday if the user has hotline assigned to him/her next week." width="100%"/>
+		</VBox>
+	</content>
+	<endButton>
+		<Button text="Close" press="closeHelpHome"/>
+	</endButton>
+	</Dialog>
+</core:FragmentDefinition>

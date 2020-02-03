@@ -1,0 +1,270 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" class="sapUiSizeCompact" xmlns:form="sap.ui.layout.form" controllerName="Hotline.controller.CA_Assign">
+	<App>
+		<pages>
+			<Page title="{i18n>title_admin}" showNavButton="true" navButtonPress="onNavBack" class="">
+				<footer>
+					<Bar id="__bar0">
+						<contentMiddle>
+							<HBox>
+								<HBox visible="{= ${stat>/IN} === 'Y' }">
+									<Button icon="./images/india.png"></Button>
+									<Button icon="{ path : 'stat>/IN_LOCK', formatter : '.formatter.saveStatus'}" class="boxLeft"></Button>
+								</HBox>
+								<HBox visible="{= ${stat>/DE} === 'Y' }">
+									<Button icon="./images/germany.png"></Button>
+									<Button icon="{ path : 'stat>/DE_LOCK', formatter : '.formatter.saveStatus'}" class="boxLeft"></Button>
+								</HBox>
+								<HBox visible="{= ${stat>/CA} === 'Y' }">
+									<Button icon="./images/canada.png"></Button>
+									<Button icon="{ path : 'stat>/CA_LOCK', formatter : '.formatter.saveStatus'}"></Button>
+								</HBox>
+							</HBox>
+						</contentMiddle>
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentRight>
+							<Button text="SAVE and inform Admin" width="auto" icon="sap-icon://locked" press="saveAndInform" id="__aBtn1"/>
+							<Button text="Save All" icon="sap-icon://save" type="Accept" press="saveAll" id="__aBtn2"/>
+						</contentRight>
+					</Bar>
+				</footer>
+				<content>
+					<MessageStrip id="__msgStrip" visible="false" showCloseButton="false" type="Warning" showIcon="true"/>
+					<IconTabBar id="__mainTab" backgroundDesign="Translucent" upperCase="true" select="onSelectTab"/>
+					<Bar>
+						<contentLeft>
+							<Label text="Show Advanced Actions"></Label>
+							<Switch enabled="true" state="{adv>/state}" customTextOff="No" customTextOn="Yes"/>
+						</contentLeft>
+						<contentMiddle>
+							<Button text="Manage Monthly Schedules" type="Emphasized" visible="{= ${tableType>/table} === 'M'}" press="openScheduler"/>
+						</contentMiddle>
+						<contentRight>
+							<Text text="Quarter" maxLines="0" visible="{= ${tableType>/table} !== 'M'}"/>
+							<Select width="100px" id="_aQtr" selectedKey="{head>/0/Quarter}" visible="{= ${tableType>/table} !== 'M'}">
+								<core:Item key="01" text="01"/>
+								<core:Item key="02" text="02"/>
+								<core:Item key="03" text="03"/>
+								<core:Item key="04" text="04"/>
+							</Select>
+							<Text text="Month" visible="{= ${tableType>/table} === 'M'}"/>
+							<Select width="120px" selectedKey="{head>/0/Month}" visible="{= ${tableType>/table} === 'M'}">
+								<core:Item key="01" text="January"/>
+								<core:Item key="02" text="February"/>
+								<core:Item key="03" text="March"/>
+								<core:Item key="04" text="April"/>
+								<core:Item key="05" text="May"/>
+								<core:Item key="06" text="June"/>
+								<core:Item key="07" text="July"/>
+								<core:Item key="08" text="August"/>
+								<core:Item key="09" text="September"/>
+								<core:Item key="10" text="October"/>
+								<core:Item key="11" text="November"/>
+								<core:Item key="12" text="December"/>
+							</Select>
+							<Text text="of Year" maxLines="0"/>
+							<StepInput min="2017" max="2020" step="1" value="{head>/0/Year}" width="auto"/>
+							<Button text="Get" icon="sap-icon://arrow-right" type="Emphasized" iconFirst="false" press="refreshAssignments"/>
+						</contentRight>
+						<contentMiddle/>
+					</Bar>
+					<Bar>
+						<contentLeft>
+							<Text text="Legend :"></Text>
+							<l:HorizontalLayout class="pColor" >
+								<Text text="User Preferences" class="vGreen" width="120px" textAlign="Center"/>
+							</l:HorizontalLayout>
+							<l:HorizontalLayout class="rColor" >
+								<Text text="System Generated" class="vGreen" width="120px" textAlign="Center"/>
+							</l:HorizontalLayout>
+							<Text text="Please note: Colors will go away when saved"/>
+						</contentLeft>
+						<contentRight>
+							<Button text="Copy Assignments" press="onPressCopyAssignments" type="Emphasized"/>
+							<Text text="System Generated Names" class="rightMargin" visible="{= ${tableType>/table} === 'D' || ${tableType>/table} === 'M'}"/>
+							<Switch visible="{= ${tableType>/table} === 'D' || ${tableType>/table} === 'M'}" state="{adv>/genBtn}" change="onChangeGeneration"/>
+							<Button visible="{= !${adv>/genBtn} &amp;&amp; (${tableType>/table} === 'D' || ${tableType>/table} === 'M')}" text="Generate Names"
+								press="generateNames" type="Emphasized" icon="sap-icon://generate-shortcut"/>
+						</contentRight>
+					</Bar>
+					<Table noDataText="Contact Administrator" id="__dailyTable" items="{daily>/results}" updateFinished="updateDailyTableColors"
+						visible="{= ${tableType>/table} === 'D' || ${tableType>/table} === 'M'}">
+						<items>
+							<ColumnListItem>
+								<Text text="{daily>CW}"></Text>
+								<Text class="txtBold"
+									text="{path : 'daily>Date',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'EEEE MMM dd,yyyy' ,source :'yyyymmdd'}}"/>
+								<HBox>
+									<Input value="{daily>PrimaryUserName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="handleDeValueHelp" valueHelpOnly="true" id="__i2" editable="{= ${daily>P1_Edit} === 'Y' }"/>
+									<Button type="Default" width="auto" icon="sap-icon://sys-cancel" press="clearDailyInput" visible="{= ${daily>P1_Edit} === 'Y' }"/>
+									<Button icon="sap-icon://copy" press="copyDailyPrimaryName" visible="{= ${adv>/state} === true &amp;&amp; ${daily>P1_Edit} === 'Y'}"/>
+									<Button icon="sap-icon://paste" press="pasteDailyPrimaryName" visible="{= ${adv>/state} === true &amp;&amp; ${daily>P1_Edit} === 'Y'}"/>
+								</HBox>
+								<HBox>
+									<Input value="{daily>BackupUserName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+										valueHelpRequest="backupHandleDeValueHelp" valueHelpOnly="true" id="__i5" editable="{= ${daily>P2_Edit} === 'Y' }"/>
+									<Button type="Default" width="auto" icon="sap-icon://sys-cancel" press="clearDailyBackupInput" visible="{= ${daily>P2_Edit} === 'Y' }"/>
+									<Button icon="sap-icon://copy" press="copyDailyBackupName" visible="{= ${adv>/state} === true &amp;&amp; ${daily>P2_Edit} === 'Y'}"/>
+									<Button icon="sap-icon://paste" press="pasteDailyBackupName" visible="{= ${adv>/state} === true &amp;&amp; ${daily>P2_Edit} === 'Y'}"/>
+								</HBox>
+								<Button type="Default" press="editDailyComment" text="{daily>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments "/>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column mergeDuplicates="true" width="30px">
+								<header>
+									<Label text="CW"/>
+								</header>
+							</Column>
+							<Column width="100px">
+								<header>
+									<Label text="Date"/>
+								</header>
+							</Column>
+							<Column width="auto">
+								<header>
+									<Label text="Primary Hotliner "/>
+								</header>
+							</Column>
+							<Column visible="{= ${tableType>/type} === 'PB' }" width="auto">
+								<header>
+									<Label text="Backup Hotliner "/>
+								</header>
+							</Column>
+							<Column width="auto">
+								<header>
+									<Label text="Comment"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<Table noDataText="Contact Administrator" id="__table0" items="{tab>/results}" updateFinished="onUpdateWeeklyTable"
+						visible="{= ${tableType>/table} === 'G' }">
+						<items>
+							<ColumnListItem >
+								<cells>
+									<ObjectIdentifier
+										text="{path : 'tab>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}} To {path : 'tab>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"
+										title="{tab>CW} of {tab>Year}"></ObjectIdentifier>
+									<HBox>
+										<Input value="{tab>PrimaryUserName}" class="hidePointer" maxLines="0" id="__text3" showSuggestion="true" showValueHelp="true"
+											valueHelpRequest="handleDeValueHelp" valueHelpOnly="true"/>
+										<Button type="Default" width="auto" icon="sap-icon://sys-cancel" press="clearWeeklyInput"/>
+										<Button icon="sap-icon://copy" press="copyPrimaryName" visible="{= ${adv>/state} === true }"/>
+										<Button icon="sap-icon://paste" press="pastePrimaryName" visible="{= ${adv>/state} === true }"/>
+									</HBox>
+									<HBox>
+										<Input value="{tab>BackupUserName}" class="hidePointer" maxLines="0" id="__text5" showSuggestion="true" showValueHelp="true"
+											valueHelpRequest="backupHandleDeValueHelp" valueHelpOnly="true"/>
+										<Button width="auto" icon="sap-icon://sys-cancel" press="clearWeeklyInputBackup" tooltip="Clear"/>
+										<Button icon="sap-icon://copy" press="copyBackupName" visible="{= ${adv>/state} === true }"/>
+										<Button icon="sap-icon://paste" press="pasteBackupName" visible="{= ${adv>/state} === true }"/>
+									</HBox>
+									<HBox>
+										<Button icon="sap-icon://synchronize" press="swapNames" tooltip="Swap Names of CW{tab>CW}" visible="{= ${adv>/state} === true }"/>
+										<Button icon="sap-icon://close-command-field" press="pushNames" tooltip="Assign to CW{tab>CW}"/>
+									</HBox>
+									<ScrollContainer vertical="false" horizontal="true">
+										<HBox items="{tab>tentative}">
+											<items>
+												<ToggleButton text="{tab>Name}" width="auto" pressed="{tab>selected}" press="checkPressedState"/>
+											</items>
+										</HBox>
+									</ScrollContainer>
+									<Button type="Default" press="editComment" text="{tab>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments CW{tab>CW}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column width="150px">
+								<header>
+									<Label text="Calendar Week"/>
+								</header>
+							</Column>
+							<Column width="200px">
+								<header>
+									<Label text="Primary"/>
+								</header>
+							</Column>
+							<Column width="200px">
+								<header>
+									<Label text="Peer"/>
+								</header>
+							</Column>
+							<Column width="50px">
+								<header>
+									<Label text=""/>
+								</header>
+							</Column>
+							<Column>
+								<header>
+									<Label text="Maybe"/>
+								</header>
+							</Column>
+							<Column width="80px">
+								<header>
+									<Label text="Comment" id="__comntLabel"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+					<Table noDataText="Contact Administrator" id="__table1" items="{week>/results}" updateFinished="onUpdateTable"
+						visible="{= ${tableType>/table} === 'W' }">
+						<items>
+							<ColumnListItem >
+								<cells>
+									<ObjectIdentifier
+										text="{path : 'week>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}} To {path : 'week>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"
+										title="{week>CW} of {week>Year}"></ObjectIdentifier>
+									<HBox>
+										<Input value="{week>PrimaryUserName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+											valueHelpRequest="handleDeValueHelp" valueHelpOnly="true"/>
+										<Button type="Default" width="auto" icon="sap-icon://sys-cancel" press="clearInput"/>
+										<Button icon="sap-icon://copy" press="copyPName" visible="{= ${adv>/state} === true }"/>
+										<Button icon="sap-icon://paste" press="pastePName" visible="{= ${adv>/state} === true }"/>
+									</HBox>
+									<HBox>
+										<Input value="{week>BackupUserName}" class="hidePointer" maxLines="0" showSuggestion="true" showValueHelp="true"
+											valueHelpRequest="backupHandleDeValueHelp" valueHelpOnly="true"/>
+										<Button width="auto" icon="sap-icon://sys-cancel" press="clearInputBackup" tooltip="Clear"/>
+										<Button icon="sap-icon://copy" press="copyBName" visible="{= ${adv>/state} === true }"/>
+										<Button icon="sap-icon://paste" press="pasteBName" visible="{= ${adv>/state} === true }"/>
+									</HBox>
+									<Button type="Default" press="editCommentWeekly" text="{week>Comment}" icon="sap-icon://comment" tooltip="Add/View Comments CW{week>CW}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<columns>
+							<Column width="150px">
+								<header>
+									<Label text="Calendar Week"/>
+								</header>
+							</Column>
+							<Column width="auto">
+								<header>
+									<Label text="Primary Hotliner"/>
+								</header>
+							</Column>
+							<Column visible="{= ${tableType>/type} === 'PB' }" width="auto">
+								<header>
+									<Label text="Backup Hotliner"/>
+								</header>
+							</Column>
+							<Column width="auto">
+								<header>
+									<Label text="Comment"/>
+								</header>
+							</Column>
+						</columns>
+					</Table>
+				</content>
+				<headerContent>
+					<Button icon="sap-icon://sys-help" type="Transparent" press="showAssgnHelp" tooltip="Help"/>
+				</headerContent>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

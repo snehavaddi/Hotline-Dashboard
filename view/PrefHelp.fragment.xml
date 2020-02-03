@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:l="sap.ui.layout">
+	<Dialog title="Help" icon="sap-icon://sys-help" afterClose="destroyPrefHelp">
+		<content>
+			<Carousel width="auto">
+				<pages>
+					<VBox>
+						<Image src="{imageModel>/path}/images/customerhl.PNG" width="100%" class=""/>
+						<html:hr></html:hr>
+						<Title text="May be Option" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+						<TextArea rows="5" editable="false"
+							value="Hotliners can select Maybe option for Customer Hotline. By selecting this, user accepts that he/she can be assigned to the calendar week if no one gives their choice, or as decided by the Admin"
+							width="100%"/>
+					</VBox>
+					<VBox>
+						<Image src="{imageModel>/path}/images/targets.PNG" width="100%" class=""/>
+						<html:hr></html:hr>
+						<Title text="Cloud Patch Target Days" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+						<TextArea rows="5" editable="false"
+							value="Applicable only to Cloud Patch Hotline, users can see the target they have to achieve for the year. Also it shows number of days already finished for Hotline and Backup."
+							width="100%"/>
+					</VBox>
+				</pages>
+			</Carousel>
+		</content>
+		<endButton>
+			<Button text="Close" press="closeHelpPref"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

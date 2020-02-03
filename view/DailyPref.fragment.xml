@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog title="Daily Preferences">
+		<content>
+			<Table id="__weektable" width="500px">
+			
+			</Table>
+		</content>
+		<buttons>
+			<Button text="Save" press="saveDaily" id="__saveDaily"/>
+			<Button text="Close" press="closeDaily"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

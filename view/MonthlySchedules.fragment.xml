@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Dialog title="Manage Deadlines" icon="sap-icon://sys-help" afterClose="destroyHomeHelp">
+		<content>
+			<VBox class="vboxDialog">
+				<Label text="Select Month for User Preference" required="true"/>
+				<Select forceSelection="true" width="100%" selectedKey="{/CAL_MONTH}">
+					<core:Item key="01" text="January"/>
+					<core:Item key="02" text="February"/>
+					<core:Item key="03" text="March"/>
+					<core:Item key="04" text="April"/>
+					<core:Item key="05" text="May"/>
+					<core:Item key="06" text="June"/>
+					<core:Item key="07" text="July"/>
+					<core:Item key="08" text="August"/>
+					<core:Item key="09" text="September"/>
+					<core:Item key="10" text="October"/>
+					<core:Item key="11" text="November"/>
+					<core:Item key="12" text="December"/>
+				</Select>
+				<Label text="Year"/>
+				<StepInput min="2017" max="2050" step="1" value="{/CAL_YEAR}"/>
+				<Label text="Deadline Date" required="true"/>
+				<DatePicker valueFormat="yyyyMMdd" value="{/DEADLINE}" /> 
+			</VBox>
+		</content>
+		<beginButton>
+			<Button text="Update" press="updateSchedules"/>
+		</beginButton>
+		<endButton>
+			<Button text="Close" press="closeSchedules"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

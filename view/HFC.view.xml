@@ -1,0 +1,100 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="Hotline.controller.HFC"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="" showHeader="false">
+				<OverflowToolbar design="Solid">
+					<Label text="Actions:"/>
+					<ToolbarSpacer/>
+					<Button text="HFC Master Data" type="Emphasized" press="updateMasterData" visible="{= ${master>/Superuser} === 'X'}"/>
+					<Button text="Assign Tasks" type="Emphasized" press="openHfcAssign" visible="{= ${master>/Admin} === 'X'}"/>
+					<Button text="Submit Preferences" type="Emphasized" press="openPrefDialog" visible="{= ${master>/Enduser} === 'X'}"/>
+					<Button text="Set Schedules" type="Emphasized" press="openHfcScheduler" visible="{= ${master>/Admin} === 'X'}"/>
+				</OverflowToolbar>
+				<OverflowToolbar design="Transparent">
+					<ToolbarSpacer/>
+					<Text text="Month"/>
+					<Select selectedKey="{hfc>/month}">
+						<core:Item key="01" text="January"/>
+						<core:Item key="02" text="February"/>
+						<core:Item key="03" text="March"/>
+						<core:Item key="04" text="April"/>
+						<core:Item key="05" text="May"/>
+						<core:Item key="06" text="June"/>
+						<core:Item key="07" text="July"/>
+						<core:Item key="08" text="August"/>
+						<core:Item key="09" text="September"/>
+						<core:Item key="10" text="October"/>
+						<core:Item key="11" text="November"/>
+						<core:Item key="12" text="December"/>
+					</Select>
+					<Text text="of Year"/>
+					<StepInput min="2018" max="2025" step="1" value="{hfc>/year}" width="150px"/>
+					<Button text="Fetch" type="Emphasized" press="getHfcData"/>
+				</OverflowToolbar>
+				<ScrollContainer height="525px" vertical="true" focusable="true">
+					<Table noDataText="No data found for the selected period" id="hfcTaskTable"
+						items="{path : 'hfcTask>/results', sorter: { path: 'GroupName', descending: false, group: true }, groupHeaderFactory: '.getGroupHeader'}"
+						headerText="" class="sapUiSizeCompact" growingScrollToLoad="true" inset="false">
+						<headerToolbar>
+							<Toolbar>
+								<content>
+									<Title text="{master>/Text} Tasks" level="H2"/>
+									<ToolbarSpacer/>
+									<Button tooltip="View Sort Settings " icon="sap-icon://sort" press="handleSortButtonPressed"/>
+									<Button tooltip="View Filter Settings" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
+									<Button tooltip="View Group Settings" icon="sap-icon://group-2" press="handleGroupButtonPressed"/>
+									<Button icon="sap-icon://add" text="Add New Task" type="Accept" press="onPressAddNewTask" visible="{= ${master>/Admin} === 'X'}"/>
+								</content>
+							</Toolbar>
+						</headerToolbar>
+						<infoToolbar>
+							<Toolbar id="hfcTaskTablevsdFilterBar" visible="false">
+								<Text id="hfcTaskTablevsdFilterLabel"/>
+							</Toolbar>
+						</infoToolbar>
+						<columns>
+							<Column width="200px" minScreenWidth="Tablet">
+								<header>
+									<Label text="Task Details"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="Primary"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="IN Backup"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="DE Backup"/>
+								</header>
+							</Column>
+							<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+								<header>
+									<Label text="CA Backup"/>
+								</header>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem counter="0" type="{= ${master>/Enduser} === 'X' ? 'Navigation' : 'Inactive' }" press="onItemPress">
+								<cells>
+									<ObjectIdentifier title="{hfcTask>GroupName} - {hfcTask>TaskName}"
+										text="{path : 'hfcTask>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}} - {path : 'hfcTask>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"/>
+									<Text text="{hfcTask>Primaryname}"/>
+									<Text text="{hfcTask>InBackupname}"/>
+									<Text text="{hfcTask>DeBackupname}"/>
+									<Text text="{hfcTask>CaBackupname}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</ScrollContainer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

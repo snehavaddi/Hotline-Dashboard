@@ -1,0 +1,73 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="Maintain Hotline Master Detail" stretch="true">
+		<content>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+				adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"
+				singleContainerFullSize="false">
+				<f:content>
+					<core:Title text="Main Information"/>
+					<MessageStrip id="_msg1" type="Error" showIcon="true" text="Hotline Key/Text cannot be empty"  visible="false"/>
+					<Label text="Hotline Key" width="100%" required="true"/>
+					<Input width="100%" value="{row>/HotlineNum}" maxLength="10" editable="{row>/Add}"/>
+					<Label text="Hotline Text" width="100%" required="true"/>
+					<Input width="100%" value="{row>/HotlineTxt}"/>
+					<Label text="Overlapping" width="100%" required="true"/>
+					<Switch id="prioSwitch" customTextOff="No" customTextOn="Yes" state="{path : 'row>/Priority', formatter : '.formatter.priorityText'}"/>
+					<Label text="Can Hotliners Users Edit (HomePage)" width="100%"></Label>
+					<Switch id="editSwitch" customTextOff="No" customTextOn="Yes" state="{path : 'row>/UserEdit', formatter : '.formatter.userEditState'}"></Switch>
+					<core:Title text="Additional Information"/>
+					<MessageStrip  id="_msg2" type="Error" showIcon="true" text="DL and Admin names should be filled" visible="false"/>
+					<Label text="User Group DL (IN)" width="100%" required="true"/>
+					<Input width="100%" value="{row>/UserGroupDl}"/>
+					<Label text="Admin User ID (IN)" width="100%" required="true"/>
+					<MultiInput id="multiinput1" enableMultiLineMode="false" width="100%" tokens="{ path: 'IN>/results', sorter: { path: 'Name' } }"
+						valueHelpRequest="handleInValueHelp">
+						<tokens>
+							<Token key="{IN>AdminUname}" text="{IN>Name}"/>
+						</tokens>
+					</MultiInput>
+					<Label text="User Group DL (DE)" width="100%" required="true"/>
+					<Input width="100%" value="{row>/UserGroupDl_DE}"/>
+					<Label text="Admin User ID (DE)" width="100%" required="true"/>
+					<MultiInput id="multiinput2" enableMultiLineMode="false" width="100%" tokens="{ path: 'DE>/results', sorter: { path: 'Name' } }"
+						valueHelpRequest="handleDeValueHelp">
+						<tokens>
+							<Token key="{DE>AdminUname}" text="{DE>Name}"/>
+						</tokens>
+					</MultiInput>
+					<Label text="User Group DL (CA)" width="100%" required="true"/>
+					<Input width="100%" value="{row>/UserGroupDlCa}"></Input>
+					<Label text="Admin User ID (CA)" width="100%" required="true"/>
+					<MultiInput id="multiinput3" enableMultiLineMode="false" width="100%" tokens="{ path: 'CA>/results', sorter: { path: 'Name' } }"
+						valueHelpRequest="handleCaValueHelp">
+						<tokens>
+							<Token key="{CA>AdminUname}" text="{CA>Name}"/>
+						</tokens>
+					</MultiInput>
+				</f:content>
+			</f:SimpleForm>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
+				adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+				singleContainerFullSize="false">
+				<f:content>
+					<core:Title text=""/>
+					<Label text="Assignment/Preference Cycle" required="true"></Label>
+					<SegmentedButton selectedKey="{row>/Frequency}">
+						<items>
+							<SegmentedButtonItem text="Weekly/Quarter" key="3"/>
+							<SegmentedButtonItem text="Daily/Quarter" key="4"/>
+							<SegmentedButtonItem text="Daily/Month" key="5"/>
+							<SegmentedButtonItem text="Weekly/No Preference" key="0"/>
+						</items>
+					</SegmentedButton>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button id="updBtn" text="Modify" type="Accept" press="updateEntry" visible="{row>/Edit}"/>
+			<Button id="delBtn" text="Delete" type="Reject" press="deleteHotlines" visible="{row>/Edit}"/>
+			<Button id="savBtn" text="Save" type="Accept" press="createEntry" visible="{row>/Add}"/>
+			<Button id="closeBtn" text="Close" type="Reject" press="closeDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

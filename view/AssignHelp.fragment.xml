@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:l="sap.ui.layout">
+	<Dialog title="Help" icon="sap-icon://sys-help" afterClose="destroyAssgn">
+		<content>
+			<Carousel width="auto">
+				<pages>
+					<VBox>
+						<Image src="{imageModel>/path}/images/adv_on.PNG" width="100%" class=""/>
+						<html:hr></html:hr>
+						<Title text="Advanced Features" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+						<TextArea rows="5" editable="false"
+							value="This feature introduces Copy/Paste. It can copy paste from one field and paste in any other field. It wont paste if the primary and backup are same."
+							width="100%"/>
+					</VBox>
+					<VBox>
+						<Image src="{imageModel>/path}/images/save.PNG" width="100%" class=""/>
+						<html:hr></html:hr>
+						<Title text="Country Save Status" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+						<TextArea rows="5" editable="false"
+							value="This traffic lights show the current status of Hotlines Assignment. If color is green then the Admin of the country has saved and locked. Red denotes admin has not yet saved and locked"
+							width="100%"/>
+					</VBox>
+					<VBox>
+						<Image src="{imageModel>/path}/images/maybe.PNG" width="auto" class=""/>
+						<html:hr></html:hr>
+						<Title text="Maybe Option" titleStyle="H3" class="titleHelp" textAlign="Center"/>
+						<TextArea rows="5" editable="false"
+							value="This is only applicable to Customer Hotline in Germany. Admin can select one person from the tentative user list and assign it to primary or peer column."
+							width="100%"/>
+					</VBox>
+				</pages>
+			</Carousel>
+		</content>
+		<endButton>
+			<Button text="Close" press="closeHelpAssgn"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

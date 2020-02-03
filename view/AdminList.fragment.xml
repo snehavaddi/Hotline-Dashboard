@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog showHeader="true" title="List of Admin(s)">
+		<content>
+			<List items="{ path: 'admin>/results', sorter: { path: 'Region', descending: false, group: true } , groupHeaderFactory : '.getGroupHeader'}"
+				noDataText="No Admins Maintained">
+				<StandardListItem title="{admin>Name}" description="{admin>AdminUname}" iconDensityAware="false" iconInset="false"/>
+			</List>
+		</content>
+		<endButton>
+			<Button type="Reject" text="Close" icon="" press="closeAdminDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

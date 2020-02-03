@@ -1,0 +1,43 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form" class="sapUiSizeCompact" xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="Hotline.controller.Main_DE">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" showFooter="true" navButtonPress="onNavBack" showNavButton="true">
+				<content>
+					<HBox>
+						<List id="hList" width="250px" class="dragList" headerText="List of Hotlines" items="{/results}" visible="false">
+							<items>
+								<StandardListItem title="{HotlineTxt}"/>
+							</items>
+						</List>
+						<Table id="pTable" inset="false" width="100%" class="table" mode="None">
+							<items></items>
+						</Table>
+					</HBox>
+				</content>
+				<footer>
+					<Bar>
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentRight>
+							<Button id="saveBtnMDe" text="Save" type="Accept" width="200px" press="saveAll"></Button>
+						</contentRight>
+						<contentMiddle>
+							<Button text="CLOUD PATCH HOTLINE : Total Target" visible="{= ${userTarget>/show} }"/>
+							<Button text="{userTarget>/results/0/TotalTarget}" type="Emphasized"/>
+							<Button text="Hotline Target Done" visible="{= ${userTarget>/show} }"/>
+							<Button text="{userTarget>/results/0/HotlineTarget}" type="Emphasized"/>
+							<Button text="Backup Target Done" visible="{= ${userTarget>/show} }"/>
+							<Button text="{userTarget>/results/0/BackupTarget}" type="Emphasized"/>
+						</contentMiddle>
+					</Bar>
+				</footer>
+				<headerContent>
+					<Button icon="sap-icon://sys-help" type="Transparent" press="showHelp" tooltip="Help"/>
+				</headerContent>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

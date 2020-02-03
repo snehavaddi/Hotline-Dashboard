@@ -1,0 +1,75 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" class="sapUiSizeCompact"
+	controllerName="Hotline.controller.Manage" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App >
+		<pages>
+			<Page title="{i18n>title_admin}" showNavButton="true" navButtonPress="onNavBack" class="pageBg" backgroundDesign="Transparent" floatingFooter="true">
+				<Toolbar design="Info">
+					<Title text="{head>/HotlineNum} | Target : {head>/Target} Days"/>
+					<ToolbarSpacer width="20px"/>
+					<Input type="Number" width="100px" value="{btn>/target}" visible="{= ${btn>/editHeader} }"/>
+					<Button type="Emphasized" icon="sap-icon://save" text="Save" press="updateTarget" visible="{= ${btn>/editHeader} }"/>
+					<Button icon="sap-icon://edit-outside" type="Emphasized" press="editTarget" visible="{= !${btn>/editHeader} }"/>
+					<ToolbarSpacer></ToolbarSpacer>
+					<StepInput min="2017" max="2030" step="1" value="{head>/CalYear}" width="auto" required="true"/>
+					<Button text="Get Users" press="refreshUser" type="Emphasized" icon="sap-icon://arrow-right" iconFirst="false"/>
+				</Toolbar>
+				<Table noDataText="No Users Maintained" backgroundDesign="Solid" items="{user>/results}" id="maintTable" itemPress="onItemPress" >
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer/>
+							<Button text="Add User" icon="sap-icon://add-employee" type="Emphasized" width="150px" press="onPressAdd"/>
+							<Button icon="sap-icon://collections-management" press="calculateTarget" type="Emphasized" text="Re-calculate Targets"/>
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ColumnListItem counter="0" type="Navigation">
+							<cells>
+								<ObjectIdentifier text=" ({user>Uname})" title="{user>FullName}"/>
+								<ObjectNumber number="{user>Fte}"/>
+								<ObjectNumber number="{user>TotalTarget}"/>
+								<ObjectStatus text="{user>HotlineTarget}"
+									state="{parts : [{path : 'user>TotalTarget'}, {path : 'user>HotlineTarget'}],formatter:'.formatter.HotlineTarget'}"
+									icon="{parts : [{path : 'user>TotalTarget'}, {path : 'user>HotlineTarget'}],formatter:'.formatter.HotlineTargetIcon'}"/>
+								<ObjectStatus text="{user>BackupTarget}"
+									state="{parts : [{path : 'user>TotalTarget'}, {path : 'user>BackupTarget'}],formatter:'.formatter.HotlineTarget'}"
+									icon="{parts : [{path : 'user>TotalTarget'}, {path : 'user>BackupTarget'}],formatter:'.formatter.HotlineTargetIcon'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+					<columns>
+						<Column width="auto">
+							<header>
+								<Label text="Name"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="FTE"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="Total Target"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header >
+								<Label text="Actual Hotline Target"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="Actual Backup Target"/>
+							</header>
+						</Column>
+					</columns>
+				</Table>
+				<footer>
+					<OverflowToolbar>
+						<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

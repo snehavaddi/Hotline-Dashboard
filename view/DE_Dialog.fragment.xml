@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="Users (Germany)" class="sapUiPopupWithPadding" items="{ger>/results}" search="_handleValueHelpSearch_DE"  liveChange="_handleValueHelpSearch_DE"
+		confirm="_handleValueHelpClose_DE" cancel="_handleValueHelpClose_DE" >
+		<StandardListItem  iconDensityAware="false" iconInset="false" title="{ger>Name}" description="{ger>UserId}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

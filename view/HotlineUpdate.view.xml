@@ -1,0 +1,125 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"  class="sapUiSizeCompact"  xmlns:html="http://www.w3.org/1999/xhtml"
+	controllerName="Hotline.controller.HotlineUpdate">
+	<App>
+		<pages>
+			<Page title="{i18n>title_admin}" showNavButton="true" navButtonPress="onNavBack" class="pageBg">
+				<Table alternateRowColors="true" noDataText="No Hotlines Maintained" backgroundDesign="Solid" items="{tab>/results}" id="maintTable" itemPress="onItemPress">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="List of Active Hotlines"/>
+							<ToolbarSpacer></ToolbarSpacer>
+							<Button text="Add Entry" icon="sap-icon://add" type="Emphasized" width="150px" press="onPressAdd"/>
+							<Button icon="sap-icon://refresh" press="refreshModel" type="Accept"/>
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ColumnListItem counter="0" type="Navigation">
+							<cells>
+								<ObjectIdentifier title="{tab>HotlineTxt}" text="{tab>HotlineNum}"/>
+								<Switch enabled="false" state="{path : 'tab>Priority', formatter : '.formatter.priorityText'}" customTextOff="No" customTextOn="Yes"/>
+								<Text text="{path : 'tab>Frequency', formatter : '.formatter.frequencyText'}"/>
+								<Text text="{tab>UserGroupDl}"/>
+								<Text text="{tab>UserGroupDl_DE}"/>
+								<Text text="{tab>UserGroupDlCa}"/>
+								<Switch enabled="false" state="{path : 'tab>UserEdit', formatter : '.formatter.userEditState'}" customTextOff="No" customTextOn="Yes"/>
+								<Link text="Show Admin(s) of {tab>HotlineNum}" press="showAdmin"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+					<columns>
+						<Column width="auto">
+							<header>
+								<Label text="Hotline Name"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header >
+								<Label text="Overlapping Allowed"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="Assignment/Preference Cycle"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="User Group DL (IN)"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="User Group DL (DE)"/>
+							</header>
+						</Column>
+						<Column width="auto">
+							<header>
+								<Label text="User Group DL (CA)"/>
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Label text="User Edit Allowed"/>
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Label text="Admins"/>
+							</header>
+						</Column>
+					</columns>
+				</Table>
+				<Table alternateRowColors="true" noDataText="No Pairs Maintained" id="__pairTable" items="{ path: 'pair>/results'}" itemPress="onPairPress">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Maintain Pairs"/>
+							<ToolbarSpacer></ToolbarSpacer>
+							<Button text="Add Entry" icon="sap-icon://add" type="Emphasized" width="150px" press="onAddPairs"/>
+							<Button icon="sap-icon://refresh" press="setPairModel" type="Accept"/>
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ColumnListItem counter="0" type="Navigation">
+							<cells>
+								<!--<Text text="Q{pair>Quarter}"/>-->
+								<Text text="{pair>HotlineNum}" maxLines="0"/>
+								<Text text="{pair>P1Name}" maxLines="0"/>
+								<Text text="{pair>P2Name}" maxLines="0"/></cells>
+						</ColumnListItem>
+					</items>
+					<columns>
+						<!--<Column >-->
+						<!--	<header>-->
+						<!--		<Label text="Quarter"/>-->
+						<!--	</header>-->
+						<!--</Column>-->
+						<Column >
+							<header>
+								<Label text="Hotline"/>
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Label text="Hotiner #1"/>
+							</header>
+						</Column>
+						<Column >
+							<header>
+								<Label text="Hotliner #2"/>
+							</header>
+						</Column>
+					</columns>
+				</Table>
+				<footer>
+					<Bar >
+						<contentLeft>
+							<Button text="Home" icon="sap-icon://home" press="navToHome"></Button>
+						</contentLeft>
+						<contentRight>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
