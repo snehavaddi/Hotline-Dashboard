@@ -1,0 +1,118 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="Assign HFC Hotliners" stretch="true" id="_hfcAssignDialog">
+		<content>
+			<VBox width="auto" class="sapUiSmallMargin">
+				<MessageStrip
+					text="Last Date of Preference Submission for {master>/Month}/{master>/Year}: {path : 'master>/DeadlineDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'EEEE MMM dd, yyyy ' ,source :'yyyymmdd'}}"
+					showIcon="true" showCloseButton="false" type="Information"></MessageStrip>
+				<MessageStrip type="Error" text="Preference still open for current month {master>/Month}/{master>/Year}" showIcon="true"
+					showCloseButton="false" class="sapUiTinyMarginBottom" visible="{= ${master>/PrefAllowed} === 'X'}"></MessageStrip>
+				<MessageStrip type="Information" text="Data will be only saved for fields which are enabled" showIcon="true" showCloseButton="false"
+					class="sapUiTinyMarginBottom"></MessageStrip>
+				<Table noDataText="No data found for the selected period" id="hfcAssgnTable" items="{path : 'hfcAssg>/results' }" class="sapUiSizeCompact">
+					<infoToolbar>
+						<Toolbar id="hfcAssgnTablevsdFilterBar" visible="false">
+							<Text id="hfcAssgnTablevsdFilterLabel"/>
+						</Toolbar>
+					</infoToolbar>
+					<headerToolbar>
+						<OverflowToolbar design="Transparent" class="sapUiSizeCompact">
+							<ToolbarSpacer/>
+							<Button tooltip="View Sort Settings" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+							<Button tooltip="View Filter Settings" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
+							<Button tooltip="View Group Settings" icon="sap-icon://group-2" press="handleGroupButtonPressed"/>
+							<ToolbarSeparator></ToolbarSeparator>
+							<Text text="Month"/>
+							<Select selectedKey="{hfcAssg>/SelMonth}">
+								<core:Item key="01" text="January"/>
+								<core:Item key="02" text="February"/>
+								<core:Item key="03" text="March"/>
+								<core:Item key="04" text="April"/>
+								<core:Item key="05" text="May"/>
+								<core:Item key="06" text="June"/>
+								<core:Item key="07" text="July"/>
+								<core:Item key="08" text="August"/>
+								<core:Item key="09" text="September"/>
+								<core:Item key="10" text="October"/>
+								<core:Item key="11" text="November"/>
+								<core:Item key="12" text="December"/>
+							</Select>
+							<Text text="of Year"/>
+							<StepInput min="2018" max="2025" step="1" value="{hfcAssg>/Year}" width="150px"/>
+							<Button text="Fetch" type="Emphasized" press="getHfcAssignment"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="150px">
+							<header>
+								<Label text="Date"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Task Name"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Primary"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Backup IN"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Backup DE"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Backup CA"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem counter="0" type="Inactive">
+							<cells>
+								<Text class="txtBold"
+									text="{path : 'hfcAssg>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}} - {path : 'hfcAssg>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"/>
+								<Text class="txtBold" text="{hfcAssg>GroupName} - {hfcAssg>TaskName}"/>
+								<HBox width="100%">
+									<Input value="{hfcAssg>Primaryname}" showSuggestion="true" showValueHelp="true" valueHelpOnly="true"
+										valueHelpRequest="openAllUserListAssign"/>
+									<Button icon="sap-icon://sys-cancel" tooltip="Clear Content {hfcAssg>Primaryname}" press="clearPrimaryAsgn" type="Transparent"/>
+								</HBox>
+								<HBox width="100%">
+									<Input value="{hfcAssg>Backupname_1}" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onBackupHelp"
+										enabled="{= ${hfcAssg>Region} === 'IN'}"/>
+									<Button icon="sap-icon://sys-cancel" tooltip="Clear Content {hfcAssg>Backupname_1}" press="clearBackup" type="Transparent"
+										enabled="{= ${hfcAssg>Region} === 'IN'}"/>
+								</HBox>
+								<HBox width="100%">
+									<Input value="{hfcAssg>Backupname_2}" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onBackupHelp"
+										enabled="{= ${hfcAssg>Region} === 'DE'}"/>
+									<Button icon="sap-icon://sys-cancel" tooltip="Clear Content {hfcAssg>Backupname_2}" press="clearBackup" type="Transparent"
+										enabled="{= ${hfcAssg>Region} === 'DE'}"/>
+								</HBox>
+								<HBox width="100%">
+									<Input value="{hfcAssg>Backupname_3}" showSuggestion="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onBackupHelp"
+										enabled="{= ${hfcAssg>Region} === 'CA'}"/>
+									<Button icon="sap-icon://sys-cancel" tooltip="Clear Content {hfcAssg>Backupname_3}" press="clearBackup" type="Transparent"
+										enabled="{= ${hfcAssg>Region} === 'CA'}"/>
+								</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</content>
+		<buttons>
+			<Button icon="sap-icon://save" press="savehfcAssg" text="Save"
+				enabled="{= ${master>/PrefAllowed} !== 'X' &amp;&amp; ${hfcAssg>/Year}.toString() === ${master>/Year} &amp;&amp; ${hfcAssg>/SelMonth} === ${master>/Month} }"/>
+			<Button text="Cancel" icon="" press="closehfcAssg"/></buttons>
+	</Dialog>
+</core:FragmentDefinition>

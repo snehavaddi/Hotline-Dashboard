@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="Users" class="sapUiPopupWithPadding" items="{allUser>/results}" search="_handleAllUserSearch"
+		liveChange="_handleAllUserSearch" confirm="_handleAllUserConfirm" cancel="_handleAllUserConfirm">
+		<StandardListItem iconDensityAware="false" iconInset="false" title="{allUser>Name}" description="{allUser>UserId}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

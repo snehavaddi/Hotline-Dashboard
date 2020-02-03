@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="Enter HFC Schedules" >
+		<content>
+			<VBox width="250px" class="sapUiSmallMargin">
+				<Label text="Month"/>
+				<Select selectedKey="{hfcSch>/CMonth}" width="100%">
+					<core:Item key="01" text="January"/>
+					<core:Item key="02" text="February"/>
+					<core:Item key="03" text="March"/>
+					<core:Item key="04" text="April"/>
+					<core:Item key="05" text="May"/>
+					<core:Item key="06" text="June"/>
+					<core:Item key="07" text="July"/>
+					<core:Item key="08" text="August"/>
+					<core:Item key="09" text="September"/>
+					<core:Item key="10" text="October"/>
+					<core:Item key="11" text="November"/>
+					<core:Item key="12" text="December"/>
+				</Select>
+				<Text text="Year"/>
+				<StepInput min="2018" max="2025" step="1" value="{hfcSch>/CYear}" width="100%"/>
+				<Label text="Deadline Date"/>
+				<DatePicker width="100%" value="{hfcSch>/Lastdate}"  valueFormat="yyyyMMdd" />
+			</VBox>
+		</content>
+		<buttons>
+			<Button text="Update Schedules" icon="sap-icon://save" press="updateHfcSchedules" enabled="{= ${master>/Admin} === 'X'}"/>
+			<Button text="Cancel" icon="" press="closeHfcSch"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

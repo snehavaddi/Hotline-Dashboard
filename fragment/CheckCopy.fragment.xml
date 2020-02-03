@@ -1,0 +1,69 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="Copy Assignments" afterOpen="clearMsg">
+		<content>
+			<l:VerticalLayout id="oMessageContent" width="100%" >
+				<l:content></l:content>
+			</l:VerticalLayout>
+			<f:SimpleForm id="SimpleFormChange480_12120" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
+				labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"
+				singleContainerFullSize="false">
+				<f:content>
+					<Label text="Source Hotline"/>
+					<Select selectedKey="{copy>/source}" items="{ path: 'copy>/hotlines' }" change="checkCondition">
+						<core:Item key="{copy>HotlineNum}" text="{copy>HotlineTxt}"/>
+						<layoutData>
+							<l:GridData span="XL2 L3 M6 S6"/>
+						</layoutData>
+					</Select>
+					<Label text="Target Hotline"/>
+					<Select selectedKey="{copy>/target}" items="{ path: 'copy>/hotlines' }" change="checkCondition">
+						<core:Item key="{copy>HotlineNum}" text="{copy>HotlineTxt}"/>
+						<layoutData>
+							<l:GridData span="XL2 L3 M6 S6"/>
+						</layoutData>
+					</Select>
+					<Label text="Copy from Quarter/ Year"/>
+					<Select selectedKey="{copy>/s_quarter}" forceSelection="true" change="checkCondition">
+						<items>
+							<core:Item text="Quarter 1 (CW 1 to 13)" key="1"/>
+							<core:Item text="Quarter 2 (CW 14 to 26)" key="2"/>
+							<core:Item text="Quarter 3 (CW 27 to 39)" key="3"/>
+							<core:Item text="Quarter 4 (CW 40 to end)" key="4"/>
+						</items>
+						<layoutData>
+							<l:GridData span="XL2 L3 M3 S3"/>
+						</layoutData>
+					</Select>
+					<StepInput value="{copy>/s_year}" min="2017" max="2022" change="checkCondition">
+						<layoutData>
+							<l:GridData span="XL2 L3 M3 S3"/>
+						</layoutData>
+					</StepInput>
+					<Label text="Paste to Quarter/ Year"/>
+					<Select selectedKey="{copy>/t_quarter}" forceSelection="true" change="checkCondition">
+						<items>
+							<core:Item text="Quarter 1 (CW 1 to 13)" key="1"/>
+							<core:Item text="Quarter 2 (CW 14 to 26)" key="2"/>
+							<core:Item text="Quarter 3 (CW 27 to 39)" key="3"/>
+							<core:Item text="Quarter 4 (CW 40 to end)" key="4"/>
+						</items>
+						<layoutData>
+							<l:GridData span="XL2 L3 M3 S3"/>
+						</layoutData>
+					</Select>
+					<StepInput value="{copy>/t_year}" min="2017" max="2022" change="checkCondition">
+						<layoutData>
+							<l:GridData span="XL2 L3 M3 S3"/>
+						</layoutData>
+					</StepInput>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button type="Accept" text="Check" icon="sap-icon://validate" press="checkCopy" visible="{= ${copy>/enableCheck}}"/>
+			<Button type="Accept" text="Start Copy" icon="sap-icon://copy" press="startCopy" visible="{= ${copy>/enableCopy}}"/>
+			<Button type="Reject" text="Close" icon="" press="closeCheck"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

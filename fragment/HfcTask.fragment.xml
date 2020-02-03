@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="{task>/Title}">
+		<content>
+			<VBox width="auto" class="sapUiSmallMargin">
+				<Label text="Date Range"/>
+				<FlexBox alignItems="Start" justifyContent="Start">
+					<items>
+						<DatePicker valueFormat="yyyyMMdd" value="{task>/FromDate}" width="100%" class="sapUiSmallMarginEnd" editable="{= ${master>/Admin} === 'X'}"/>
+						<Text text="to" class="sapUiSmallMarginBeginEnd"/>
+						<DatePicker valueFormat="yyyyMMdd" value="{task>/ToDate}" width="100%" valueState="{task>/FromDateValueState}"
+							valueStateText="{task>/FromDateValueStateText}" editable="{= ${master>/Admin} === 'X'}"/>
+					</items>
+				</FlexBox>
+				<Label text="Task Name"/>
+				<Input value="{task>/TaskName}" width="100%" valueState="{task>/TaskNameValueState}" valueStateText="{task>/TaskNameValueStateText}"
+					editable="{= ${task>/ButtonText} === 'Save' || ${task>/ProductName} === 'MANUAL'}"/>
+				<!--Primary-->
+				<Label text="Primary"/>
+				<HBox width="100%">
+					<Input id="taskIn1" value="{task>/Primaryname}" width="100%" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="openAllUserList"
+						valueState="{task>/PrimaryState}" valueStateText="{task>/PrimaryText}"/>
+					<Button icon="sap-icon://sys-cancel" type="Transparent" tooltip="Clear {task>/Primaryname}" press="clearPrimary"/>
+				</HBox>
+				<!--IN Backup-->
+				<Label text="IN Backup"/>
+				<HBox width="100%">
+					<Input id="taskIn2" value="{task>/InBackupname}" width="100%" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="openIndiaUserList"/>
+					<Button icon="sap-icon://sys-cancel" type="Transparent" tooltip="Clear {task>/InBackupname}" press="clearInBackup"/>
+				</HBox>
+				<!--De backup-->
+				<Label text="DE Backup"/>
+				<HBox width="100%">
+					<Input id="taskDe2" value="{task>/DeBackupname}" width="100%" showValueHelp="true" valueHelpOnly="true"
+						valueHelpRequest="openGermanyUserList"/>
+					<Button icon="sap-icon://sys-cancel" type="Transparent" tooltip="Clear {task>/DeBackupname}" press="clearDeBackup"/>
+				</HBox>
+				<!--Ca Backup-->
+				<Label text="CA Backup"/>
+				<HBox width="100%">
+					<Input id="taskCa2" value="{task>/CaBackupname}" width="100%" showValueHelp="true" valueHelpOnly="true"
+						valueHelpRequest="openCanadaUserList"/>
+					<Button icon="sap-icon://sys-cancel" type="Transparent" tooltip="Clear {task>/CaBackupname}" press="clearCaBackup"/>
+				</HBox>
+			</VBox>
+		</content>
+		<buttons>
+			<Button text="{task>/ButtonText}" icon="sap-icon://save" press="addNewTask"/>
+			<Button text="Delete" icon="sap-icon://delete" press="deleteTask"
+				visible="{= ${task>/ProductName} === 'MANUAL' &amp;&amp; ${task>/ButtonText} !== 'Save' &amp;&amp; ${master>/Admin} === 'X'}"/>
+			<Button text="Close" icon="" press="closeTaskDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

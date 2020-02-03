@@ -1,0 +1,68 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="Enter HFC Preferences" stretch="true" id="_hfcPrefDialog">
+		<content>
+			<VBox width="auto" class="sapUiSmallMargin">
+				<MessageStrip
+					text="Last date for submission : {path : 'master>/DeadlineDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'EEEE MMM dd, yyyy ' ,source :'yyyymmdd'}}"
+					showIcon="true" showCloseButton="false" type="Information"></MessageStrip>
+				<MessageStrip type="Error" text="Deadline for submitting preference has passed. Please contact admin for any updates" showIcon="true"
+					showCloseButton="false" class="sapUiMediumMarginBottom" visible="{= ${master>/PrefAllowed} !== 'X'}"></MessageStrip>
+				<Table noDataText="No data found for the selected period" items="{path : 'hfcPref>/results' }" id="hfcPrefTable" class="sapUiSizeCompact">
+					<infoToolbar>
+						<Toolbar id="hfcPrefTablevsdFilterBar" visible="false">
+							<Text id="hfcPrefTablevsdFilterLabel"/>
+						</Toolbar>
+					</infoToolbar>
+					<headerToolbar>
+						<OverflowToolbar design="Transparent" class="sapUiSizeCompact">
+							<ToolbarSpacer/>
+							<Button tooltip="View Sort Settings" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+							<Button tooltip="View Filter Settings" icon="sap-icon://filter" press="handleFilterButtonPressed"/>
+							<Button tooltip="View Group Settings" icon="sap-icon://group-2" press="handleGroupButtonPressed"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="150px">
+							<header>
+								<Label text="Date"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Task Name"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Primary"/>
+							</header>
+						</Column>
+						<Column demandPopin="true" width="auto" minScreenWidth="Tablet">
+							<header>
+								<Label text="Backup"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem counter="0" type="Inactive">
+							<cells>
+								<Text class="txtBold"
+									text="{path : 'hfcPref>FromDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}} - {path : 'hfcPref>ToDate',type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd' ,source :'yyyymmdd'}}"/>
+								<Text class="txtBold" text="{hfcPref>GroupName} - {hfcPref>TaskName}"/>
+								<Switch customTextOff="No" customTextOn="Yes" state="{hfcPref>pState}" enabled="{hfcPref>pEnable}" tooltip="{hfcPref>Name}"
+									change="validateHotline"/>
+								<Switch customTextOff="No" customTextOn="Yes" state="{hfcPref>bState}" enabled="{hfcPref>bEnable}" tooltip="{hfcPref>B_Name}"
+									change="validateHotline"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</content>
+		<buttons>
+			<Button text="Save" icon="sap-icon://save" press="saveHfcPref" enabled="{= ${master>/PrefAllowed} === 'X'}"/>
+			<Button text="Cancel" icon="" press="closeHfcPref"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	class="sapUiSizeCompact">
+	<Dialog showHeader="true" title="Modify HFC Hotline Data" >
+		<content>
+			<VBox width="500px" class="sapUiSmallMargin">
+				<Label text="Hotline Id "/>
+				<Input value="{hfcData>/Id}" editable="false">
+				</Input>
+				<Label text="Hotline Text "/>
+				<Input value="{hfcData>/Text}">
+				</Input>
+				<Label text="DL (IN)"/>
+				<Input value="{hfcData>/InDl}"/>
+				<Label text="DL (DE)"/>
+				<Input value="{hfcData>/DeDl}"/>
+				<Label text="DL (CA)"/>
+				<Input value="{hfcData>/CaDl}"/>
+				<Label text="Admins (IN)" required="true"/>
+				<MultiInput id="inToken" tokens="{ path: 'IN>/results', sorter: { path: 'Name' } }" valueHelpRequest="openIndiaUserList" >
+					<tokens>
+						<Token key="{IN>AdminUname}" text="{IN>Name}" delete="removeInUser"/>
+					</tokens>
+				</MultiInput>
+				<Label text="Admins (DE)" required="true"/>
+				<MultiInput id="deToken" tokens="{ path: 'DE>/results', sorter: { path: 'Name' } }" valueHelpRequest="openGermanyUserList">
+					<tokens>
+						<Token key="{DE>AdminUname}" text="{DE>Name}"  delete="removeDeUser"/>
+					</tokens>
+				</MultiInput>
+				<Label text="Admins (CA)" required="true"/>
+				<MultiInput id="caToken" tokens="{ path: 'CA>/results', sorter: { path: 'Name' } }" valueHelpRequest="openCanadaUserList">
+					<tokens>
+						<Token key="{CA>AdminUname}" text="{CA>Name}"  delete="removeCaUser"/>
+					</tokens>
+				</MultiInput>
+				<Text text="Changes will reflect only when Modify button is pressed" class="infoText"/>
+		</VBox>
+	</content>
+	<buttons>
+		<Button text="Modify" icon="sap-icon://save" press="updateHfc"/>
+		<Button text="Close" icon="" press="closeHfcDialog"/>
+	</buttons>
+</Dialog>
+</core:FragmentDefinition>
